@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "355502581271",
+    "project_id": "freshly-5ca37",
+    "storage_bucket": "freshly-5ca37.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:355502581271:android:d0b0620eeff73ea2d69e52",
+        "android_client_info": {
+          "package_name": "com.albertai.freshly"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "355502581271-apq5ktvu66lp3edeqes66s5mk1dkpt59.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7aZpY8RHT1HIe74tc-7iTp5uJEPSXD9Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "355502581271-apq5ktvu66lp3edeqes66s5mk1dkpt59.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "355502581271-0g7mcq7s9h7tsc496e7rn12ahp3puh3r.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.albertai.freshly"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -98,32 +98,27 @@ class _SignInPageState extends State<SignInPage> with
 
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.white,
         ),
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(35.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(width: MediaQuery.of(context).size.width, height: 50),
-                Image.asset(
-                  'assets/images/heart_letter.png',
-                  width: MediaQuery.of(context).size.width - 150,
-                  height: MediaQuery.of(context).size.width - 150,
-                ),
-                SizedBox(height: 50),
+                const SizedBox(height: 50),
                 TextField(
                   style: GoogleFonts.montserrat(textStyle: TextStyle(fontSize: 14)),
                   decoration: InputDecoration(
                     labelText: 'Email',
                     labelStyle: GoogleFonts.montserrat(),
                     errorText: showEmailError ? 'Email can\'t be empty' : null,
-                    errorStyle: TextStyle(color: Colors.red),
-                    enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.black), borderRadius: BorderRadius.circular(15)),
-                    focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.black), borderRadius: BorderRadius.circular(15)),
+                    errorStyle: const TextStyle(color: Colors.red),
+                    enabledBorder: OutlineInputBorder(borderSide: const BorderSide(color: Colors.black), borderRadius: BorderRadius.circular(15)),
+                    focusedBorder: OutlineInputBorder(borderSide: const BorderSide(color: Colors.black), borderRadius: BorderRadius.circular(15)),
                   ),
                   cursorColor: Colors.black,
                   controller: _emailController,
@@ -132,16 +127,16 @@ class _SignInPageState extends State<SignInPage> with
                   textInputAction: TextInputAction.next,
                   onChanged: (_email) => _updateState(),
                 ),
-                SizedBox(height: 15.0),
+                const SizedBox(height: 15.0),
                 TextField(
                   style: GoogleFonts.montserrat(textStyle: TextStyle(fontSize: 14)),
                   decoration: InputDecoration(
                     labelText: 'Password',
                     labelStyle: GoogleFonts.montserrat(),
                     errorText: showPasswordError ? 'Password can\'t be empty' : null,
-                    errorStyle: TextStyle(color: Colors.red),
-                    enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.black), borderRadius: BorderRadius.circular(15)),
-                    focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.black), borderRadius: BorderRadius.circular(15)),
+                    errorStyle: const TextStyle(color: Colors.red),
+                    enabledBorder: OutlineInputBorder(borderSide: const BorderSide(color: Colors.black), borderRadius: BorderRadius.circular(15)),
+                    focusedBorder: OutlineInputBorder(borderSide: const BorderSide(color: Colors.black), borderRadius: BorderRadius.circular(15)),
                   ),
                   cursorColor: Colors.black,
                   controller: _passwordController,
@@ -150,9 +145,9 @@ class _SignInPageState extends State<SignInPage> with
                   textInputAction: TextInputAction.done,
                   onChanged: (_password) => _updateState(),
                 ),
-                SizedBox(height: 50.0),
+                const SizedBox(height: 50.0),
                 _signInButton(primaryButtonText, submitValid),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 _switchButton(secondaryButtonText),
                 _forgotPasswordButton(_formState == FormType.signIn ? "Forgot your password?" : " "),
               ],
@@ -204,7 +199,7 @@ class _SignInPageState extends State<SignInPage> with
       ),
       style: ButtonStyle(overlayColor: MaterialStateProperty.all(Colors.transparent)),
       onPressed: text == " " ? () {} : () => Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => PasswordRecovery(),
+        builder: (context) => const PasswordRecovery(),
       )),
     );
   }

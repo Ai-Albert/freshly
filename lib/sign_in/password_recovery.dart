@@ -40,11 +40,6 @@ class _PasswordRecoveryState extends State<PasswordRecovery> with
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(width: MediaQuery.of(context).size.width),
-                Image.asset(
-                  'assets/images/password.jpg',
-                  width: MediaQuery.of(context).size.width - 150,
-                  height: MediaQuery.of(context).size.width - 150,
-                ),
                 Text(
                   'Password Reset',
                   textAlign: TextAlign.center,

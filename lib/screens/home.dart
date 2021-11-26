@@ -4,6 +4,7 @@ import 'package:freshly/custom_widgets/show_alert_dialog.dart';
 import 'package:freshly/custom_widgets/show_exception_alert_dialog.dart';
 import 'package:freshly/services/auth.dart';
 import 'package:freshly/services/database.dart';
+import 'package:freshly/sign_in/sign_in.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
@@ -15,13 +16,12 @@ class _HomeState extends State<Home> {
 
   // Controls variable elements of the basic structure of the app
   int _currentIndex = 0;
-  List<Widget> _children = [Container()];
+  List<Widget> _children = [Container(color: Colors.grey), Container(color: Colors.grey)];
   final List<String> _appBarTitles = ['Groceries', 'Favorites'];
 
   @override
   void initState() {
     super.initState();
-    _children = [];
   }
 
   // Signs out using Firebase
@@ -79,11 +79,22 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[900],
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Text(
+          _appBarTitles[_currentIndex],
+          style: const TextStyle(
+            color: Colors.black,
+          ),
+        ),
+      ),
 
       body: _children[_currentIndex],
 
       bottomNavigationBar: CurvedNavigationBar(
+        animationDuration: const Duration(milliseconds: 250),
+        color: Colors.white,
+        backgroundColor: Colors.red,
         items: const [
           Icon(Icons.local_dining),
           Icon(Icons.favorite),
@@ -94,29 +105,6 @@ class _HomeState extends State<Home> {
           });
         },
       ),
-      /*
-      BottomNavigationBar(
-        backgroundColor: Colors.grey[850],
-        selectedItemColor: Colors.grey[350],
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        iconSize: 30,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.article_outlined),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.access_time_outlined),
-            label: '',
-          ),
-        ],
-      ),
-      */
     );
   }
 }
