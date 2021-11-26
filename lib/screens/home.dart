@@ -1,7 +1,11 @@
+import 'package:animated_icon_button/animated_icon_button.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:fluent_appbar/fluent_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:freshly/custom_widgets/show_alert_dialog.dart';
 import 'package:freshly/custom_widgets/show_exception_alert_dialog.dart';
+import 'package:freshly/screens/favorites.dart';
+import 'package:freshly/screens/groceries.dart';
 import 'package:freshly/services/auth.dart';
 import 'package:freshly/services/database.dart';
 import 'package:freshly/sign_in/sign_in.dart';
@@ -14,11 +18,25 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
+  ScrollController scrollController = ScrollController();
+
   // Controls variable elements of the basic structure of the app
   int _currentIndex = 0;
-  List<Widget> _children = [Container(color: Colors.grey), Container(color: Colors.grey)];
+  final List<Widget> _children = [Groceries(),Favorites()];
   final List<String> _appBarTitles = ['Groceries', 'Favorites'];
-
+/*
+  AnimatedIconButton(
+  icons: const [
+  AnimatedIconItem(
+  icon: Icon(Icons.favorite_border, color: Colors.black,),
+  ),
+  AnimatedIconItem(
+  icon: Icon(Icons.favorite, color: Colors.red),
+  ),
+  ],
+  onPressed: () => print("outer"),
+  )];
+*/
   @override
   void initState() {
     super.initState();
@@ -57,7 +75,7 @@ class _HomeState extends State<Home> {
       showExceptionAlertDialog(
         context,
         title: "Operation failed",
-        exception: new Exception("Try signing out and in again to do this."),
+        exception: Exception("Try signing out and in again to do this."),
       );
     }
   }
@@ -79,7 +97,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      /*appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(
           _appBarTitles[_currentIndex],
@@ -87,9 +105,14 @@ class _HomeState extends State<Home> {
             color: Colors.black,
           ),
         ),
-      ),
+      ),*/
 
-      body: _children[_currentIndex],
+      body: Stack(
+        children: [
+          _children[_currentIndex],
+          FluentAppBar(titleText: _appBarTitles[_currentIndex], scrollController: scrollController),
+        ],
+      ),
 
       bottomNavigationBar: CurvedNavigationBar(
         animationDuration: const Duration(milliseconds: 250),
