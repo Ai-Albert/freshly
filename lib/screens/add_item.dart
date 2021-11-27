@@ -147,7 +147,7 @@ class _AddTaskState extends State<AddItem> {
     return CalendarTimeline(
       showYears: true,
       initialDate: _expiryDate,
-      firstDate: DateTime.now(),
+      firstDate: _expiryDate,
       lastDate: DateTime.now().add(const Duration(days: 365)),
       onDateSelected: (date) {
         setState(() {

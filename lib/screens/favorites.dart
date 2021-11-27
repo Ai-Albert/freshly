@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:freshly/custom_widgets/show_exception_alert_dialog.dart';
 import 'package:freshly/models/food_item.dart';
+import 'package:freshly/screens/add_item.dart';
 import 'package:freshly/services/database.dart';
 import 'package:provider/provider.dart';
 import 'helpers/food_item_list_tile.dart';
@@ -49,7 +50,7 @@ class Favorites extends StatelessWidget {
             onDismissed: (direction) => _deleteFoodItem(context, item),
             child: FoodItemListTile(
               item: item,
-              onTap: () {},
+              onTap: () => AddItem.show(context, database: database, item: item),
             ),
           ),
         );
