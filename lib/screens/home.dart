@@ -28,24 +28,11 @@ class _HomeState extends State<Home> {
   int _currentIndex = 0;
   late final List<Widget> _children;
   final List<String> _appBarTitles = ['Groceries', 'Settings', 'Favorites'];
-/*
-  AnimatedIconButton(
-  icons: const [
-  AnimatedIconItem(
-  icon: Icon(Icons.favorite_border, color: Colors.black,),
-  ),
-  AnimatedIconItem(
-  icon: Icon(Icons.favorite, color: Colors.red),
-  ),
-  ],
-  onPressed: () => print("outer"),
-  )];
-*/
+
   @override
   void initState() {
     super.initState();
     _children = [Groceries(scrollController: scrollController), Container(), Favorites(scrollController: scrollController)];
-
   }
 
   // Signs out using Firebase

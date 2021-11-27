@@ -7,9 +7,9 @@ class FoodItem {
   final String name;
   final DateTime expiryDate;
   final String category;
-  final bool favorite;
+  late bool favorite;
 
-  String get formattedDate => DateFormat('MM-dd-yyyy').format(expiryDate);
+  String get formattedDate => DateFormat('MMM dd, yyyy').format(expiryDate);
 
   factory FoodItem.fromMap(Map<String, dynamic> data, String id) {
     return FoodItem(

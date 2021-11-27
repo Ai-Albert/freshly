@@ -25,7 +25,7 @@ class FirestoreDatabase implements Database {
   Stream<List<FoodItem>> foodItemsStream() => _service.collectionStream(
     path: APIPath.foodItems(uid),
     builder: (data, documentId) => FoodItem.fromMap(data, documentId),
-    sort: (a, b) => b.expiryDate.compareTo(a.expiryDate),
+    sort: (a, b) => a.expiryDate.compareTo(b.expiryDate),
   );
 
   // Getting list of favorite food items
@@ -35,7 +35,7 @@ class FirestoreDatabase implements Database {
     builder: (data, documentId) => FoodItem.fromMap(data, documentId),
     filterSource: "favorite",
     filterMatch: true,
-    sort: (a, b) => b.expiryDate.compareTo(a.expiryDate),
+    sort: (a, b) => a.expiryDate.compareTo(b.expiryDate),
   );
 
   // Setting date before task to make sure the date itself has a document
