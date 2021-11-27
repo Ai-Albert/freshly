@@ -46,7 +46,10 @@ class _FoodItemListTileState extends State<FoodItemListTile> {
 
   @override
   Widget build(BuildContext context) {
+    DateTime threshold = DateTime.now().subtract(const Duration(days: 1));
+    bool expired = threshold.compareTo(widget.item.expiryDate) > 0;
     return Card(
+      color: expired ? Colors.red : Colors.white,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20.0))),
       margin: const EdgeInsets.all(6.0),
       child: InkWell(
