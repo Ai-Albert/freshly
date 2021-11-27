@@ -1,8 +1,9 @@
+import 'package:animated_icon_button/animated_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:freshly/models/food_item.dart';
 
 class FoodItemListTile extends StatelessWidget {
-  const FoodItemListTile({required Key key, required this.item, required this.onTap}) : super(key: key);
+  const FoodItemListTile({Key? key, required this.item, required this.onTap}) : super(key: key);
 
   final FoodItem item;
   final VoidCallback onTap;
@@ -12,7 +13,6 @@ class FoodItemListTile extends StatelessWidget {
     return Card(
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20.0))),
       margin: const EdgeInsets.all(6.0),
-      color: Colors.grey[800],
       child: InkWell(
         borderRadius: const BorderRadius.all(Radius.circular(20.0)),
         onTap: onTap,
@@ -28,20 +28,40 @@ class FoodItemListTile extends StatelessWidget {
 
   Widget _buildTile(BuildContext context) {
     const TextStyle style = TextStyle(
-      color: Colors.white,
+      color: Colors.black,
       fontSize: 16.0,
     );
     return Padding(
       padding: const EdgeInsets.all(3.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(
         children: [
-          const Opacity(
-            opacity: 0.0,
-            child: Icon(Icons.arrow_forward_ios),
+          SizedBox(width: MediaQuery.of(context).size.width),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(item.name, style: style),
+                  const SizedBox(height: 5),
+                  Text(item.category, style: style),
+                  const SizedBox(height: 5),
+                  Text(item.formattedDate, style: style),
+                ],
+              ),
+              AnimatedIconButton(
+                icons: const [
+                  AnimatedIconItem(
+                    icon: Icon(Icons.favorite_border, color: Colors.black,),
+                  ),
+                  AnimatedIconItem(
+                    icon: Icon(Icons.favorite, color: Colors.red),
+                  ),
+                ],
+                onPressed: () => print("outer"),
+              ),
+            ],
           ),
-          Text(item.formattedDate, style: style),
-          const Icon(Icons.arrow_forward_ios, color: Colors.white),
         ],
       ),
     );

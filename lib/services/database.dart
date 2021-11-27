@@ -12,6 +12,9 @@ abstract class Database {
   Future<void> deleteData();
 }
 
+// For creating unique ids for new entries
+String documentIdFromCurrentDate() => DateTime.now().toIso8601String();
+
 class FirestoreDatabase implements Database {
   FirestoreDatabase({required this.uid});
   final String uid;

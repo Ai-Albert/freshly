@@ -9,6 +9,10 @@ import 'helpers/list_items_builder.dart';
 
 class Favorites extends StatelessWidget {
 
+  const Favorites({Key? key, required this.scrollController}) : super(key: key);
+
+  final ScrollController scrollController;
+
   Future<void> _deleteFoodItem(BuildContext context, FoodItem item) async {
     try {
       final database = Provider.of<Database>(context, listen: false);
@@ -35,7 +39,8 @@ class Favorites extends StatelessWidget {
       stream: database.favoritesStream(),
       builder: (context, snapshot) {
         return ListItemsBuilder<FoodItem>(
-          key: const Key("list"),
+          scrollController: scrollController,
+          context: context,
           snapshot: snapshot,
           itemBuilder: (context, item) => Dismissible(
             key: Key('date-${item.id}'),
@@ -43,7 +48,6 @@ class Favorites extends StatelessWidget {
             direction: DismissDirection.endToStart,
             onDismissed: (direction) => _deleteFoodItem(context, item),
             child: FoodItemListTile(
-              key: const Key("tile"),
               item: item,
               onTap: () {},
             ),
