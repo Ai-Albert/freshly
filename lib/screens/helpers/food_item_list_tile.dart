@@ -17,7 +17,7 @@ class FoodItemListTile extends StatefulWidget {
 class _FoodItemListTileState extends State<FoodItemListTile> {
   List<AnimatedIconItem> notFavorited = const [
     AnimatedIconItem(
-      icon: Icon(Icons.favorite_border, color: Colors.black,),
+      icon: Icon(Icons.favorite_border, color: Colors.black),
     ),
     AnimatedIconItem(
       icon: Icon(Icons.favorite, color: Colors.red),

@@ -1,11 +1,12 @@
 import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animated_button/flutter_animated_button.dart';
 import 'package:freshly/custom_widgets/category_selector.dart';
 import 'package:freshly/models/food_item.dart';
 import 'package:freshly/custom_widgets/show_exception_alert_dialog.dart';
 import 'package:freshly/services/database.dart';
-import 'package:intl/intl.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class AddItem extends StatefulWidget {
 
@@ -19,11 +20,11 @@ class AddItem extends StatefulWidget {
    * for onPressed since onPressed requires a function and AddJobPage is a Widget
    */
   static Future<void> show(BuildContext context, {required Database database, FoodItem? item}) async {
-    await Navigator.of(context, rootNavigator: true).push(
-      MaterialPageRoute(
-        builder: (context) => AddItem(database: database, item: item),
-        fullscreenDialog: true,
-      ),
+    showBarModalBottomSheet(
+      context: context,
+      builder: (context) => AddItem(database: database, item: item),
+      elevation: 100,
+      barrierColor: Colors.black45,
     );
   }
 
@@ -66,7 +67,7 @@ class _AddTaskState extends State<AddItem> {
   Future<void> _setItemAndDismiss(BuildContext context) async {
     try {
       final FoodItem item = _itemFromState();
-      if (item.name == '' || item.name == null) {
+      if (item.name == '') {
         throw const FormatException('EMPTY_NAME');
       }
 
@@ -93,27 +94,12 @@ class _AddTaskState extends State<AddItem> {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          centerTitle: true,
-          backgroundColor: Colors.red,
-          title: const Text('Add an Item'),
-          actions: <Widget>[
-            TextButton(
-              child: Text(
-                widget.item != null ? 'Update' : 'Add',
-                style: const TextStyle(fontSize: 18.0, color: Colors.white),
-              ),
-              onPressed: () => _setItemAndDismiss(context),
-            )
-          ],
-        ),
-
         body: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 const SizedBox(height: 30.0),
                 _buildName(),
@@ -121,6 +107,8 @@ class _AddTaskState extends State<AddItem> {
                 _buildCategory(),
                 const SizedBox(height: 30.0),
                 _buildExpiryDate(),
+                const SizedBox(height: 50.0),
+                _addButton(),
               ],
             ),
           ),
@@ -154,7 +142,7 @@ class _AddTaskState extends State<AddItem> {
           _expiryDate = date!;
         });
       },
-      leftMargin: 20,
+      leftMargin: 0,
       monthColor: Colors.black,
       dayColor: Colors.teal[200],
       dayNameColor: const Color(0xFF333A47),
@@ -171,11 +159,28 @@ class _AddTaskState extends State<AddItem> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         const Text(
-          'Category: ',
+          'Category:',
           style: TextStyle(color: Colors.black),
         ),
         CategorySelector(category: _category),
       ],
+    );
+  }
+
+  Widget _addButton() {
+    return AnimatedButton(
+      height: 53,
+      width: 200,
+      text: widget.item != null ? 'Update Item' : 'Add Item',
+      isReverse: true,
+      selectedTextColor: Colors.white,
+      transitionType: TransitionType.LEFT_TO_RIGHT,
+      selectedBackgroundColor: Colors.red,
+      backgroundColor: Colors.black,
+      borderColor: Colors.white,
+      borderRadius: 15,
+      borderWidth: 2,
+      onPress: () => _setItemAndDismiss(context),
     );
   }
 }

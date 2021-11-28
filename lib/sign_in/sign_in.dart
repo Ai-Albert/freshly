@@ -111,7 +111,7 @@ class _SignInPageState extends State<SignInPage> with
                 SizedBox(width: MediaQuery.of(context).size.width, height: 50),
                 const SizedBox(height: 50),
                 TextField(
-                  style: GoogleFonts.montserrat(textStyle: TextStyle(fontSize: 14)),
+                  style: GoogleFonts.montserrat(textStyle: const TextStyle(fontSize: 14)),
                   decoration: InputDecoration(
                     labelText: 'Email',
                     labelStyle: GoogleFonts.montserrat(),
@@ -129,7 +129,7 @@ class _SignInPageState extends State<SignInPage> with
                 ),
                 const SizedBox(height: 15.0),
                 TextField(
-                  style: GoogleFonts.montserrat(textStyle: TextStyle(fontSize: 14)),
+                  style: GoogleFonts.montserrat(textStyle: const TextStyle(fontSize: 14)),
                   decoration: InputDecoration(
                     labelText: 'Password',
                     labelStyle: GoogleFonts.montserrat(),

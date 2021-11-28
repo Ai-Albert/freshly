@@ -36,7 +36,7 @@ class _CategorySelectorState extends State<CategorySelector> {
       iconEnabledColor: Colors.black,
       dropdownColor: Colors.white,
       value: currCategory!,
-      style: GoogleFonts.montserrat(textStyle: TextStyle(color: Colors.black)),
+      style: GoogleFonts.montserrat(textStyle: const TextStyle(color: Colors.black)),
       items: categories.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,

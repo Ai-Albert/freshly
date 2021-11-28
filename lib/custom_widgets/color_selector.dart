@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:freshly/services/database.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class ColorSelector extends StatefulWidget {
-  const ColorSelector({Key? key, required this.colors, required this.colorNum}) : super(key: key);
-  final List<String> colors;
-  final int colorNum;
+  const ColorSelector({Key? key, required this.darkMode, required this.color}) : super(key: key);
+
+  final List<bool> darkMode;
+  final List<String> color;
 
   @override
   _ColorSelectorState createState() => _ColorSelectorState();
@@ -21,7 +24,6 @@ class _ColorSelectorState extends State<ColorSelector> {
     'Blue': '0xFF0288D1',
     'Purple': '0xFF8E24AA',
     'Pink': '0xFFD81B60',
-    'Black': '0xFF000000',
   };
   Map<String, String> colorMap2 = {
     '0xFFE53935': 'Red',
@@ -33,23 +35,22 @@ class _ColorSelectorState extends State<ColorSelector> {
     '0xFF0288D1': 'Blue',
     '0xFF8E24AA': 'Purple',
     '0xFFD81B60': 'Pink',
-    '0xFF000000': 'Black',
   };
   late String? currColor;
 
   @override
   void initState() {
     super.initState();
-    currColor = colorMap2[widget.colors[widget.colorNum]];
+    currColor = colorMap2[widget.color[0]];
   }
 
   @override
   Widget build(BuildContext context) {
     return DropdownButton<String>(
-      iconEnabledColor: Colors.white,
-      dropdownColor: Colors.black,
+      iconEnabledColor: Colors.black,
+      dropdownColor: Colors.white,
       value: currColor!,
-      style: GoogleFonts.montserrat(textStyle: TextStyle(color: Colors.white)),
+      style: GoogleFonts.montserrat(textStyle: const TextStyle(color: Colors.black)),
       items: <String>[
         'Red',
         'Orange',
@@ -72,7 +73,8 @@ class _ColorSelectorState extends State<ColorSelector> {
       onChanged: (String? value) {
         setState(() {
           currColor = value;
-          widget.colors[widget.colorNum] = colorMap1[value!]!;
+          widget.color[0] = colorMap1[value!]!;
+          Provider.of<Database>(context, listen: false).setTheme(widget.darkMode[0], colorMap1[value]!);
         });
       },
     );

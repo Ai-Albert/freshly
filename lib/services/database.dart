@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freshly/models/food_item.dart';
+import 'package:freshly/models/theme_settings.dart';
 import 'api_path.dart';
 import 'firestore_service.dart';
 
@@ -8,6 +9,9 @@ abstract class Database {
   Stream<List<FoodItem>> favoritesStream();
   Future<void> setFoodItem(FoodItem item);
   Future<void> deleteFoodItem(String id);
+
+  Future<ThemeSettings> getTheme();
+  Future<void> setTheme(bool darkMode, String accentColor);
 
   Future<void> deleteData();
 }
@@ -52,12 +56,33 @@ class FirestoreDatabase implements Database {
     await _service.deleteData(path: APIPath.foodItem(uid, id));
   }
 
+  @override
+  Future<ThemeSettings> getTheme() async {
+    var document = FirebaseFirestore.instance.doc('users/$uid/theme/theme');
+    var snapshot = await document.get();
+    return ThemeSettings.fromMap(snapshot.data());
+  }
+
+  @override
+  Future<void> setTheme(bool darkMode, String accentColor) async {
+    ThemeSettings theme = ThemeSettings(darkMode: darkMode, accentColor: accentColor);
+    _service.setData(path: APIPath.theme(uid), data: theme.toMap());
+  }
+
   // Deleting all of a user's data prior to account deletion
   @override
   Future<void> deleteData() async {
     // Deleting items
     var items = FirebaseFirestore.instance.collection(APIPath.foodItems(uid));
     var snapshotsItems = await items.get();
+    for (var item in snapshotsItems.docs) {
+      await deleteFoodItem(item.id);
+      await item.reference.delete();
+    }
+
+    // Deleting theme
+    items = FirebaseFirestore.instance.collection(APIPath.theme(uid));
+    snapshotsItems = await items.get();
     for (var item in snapshotsItems.docs) {
       await deleteFoodItem(item.id);
       await item.reference.delete();

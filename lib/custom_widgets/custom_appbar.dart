@@ -38,7 +38,7 @@ class _FluentAppBarState extends State<FluentAppBar>
     topBarAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
         CurvedAnimation(
             parent: animationController,
-            curve: Interval(0, 0.5, curve: Curves.fastOutSlowIn)));
+            curve: const Interval(0, 0.5, curve: Curves.fastOutSlowIn)));
 
     widget.scrollController.addListener(() {
       if (widget.scrollController.offset >= widget.scrollOffset) {
