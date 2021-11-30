@@ -9,34 +9,12 @@ import 'package:freshly/services/auth.dart';
 import 'package:freshly/services/database.dart';
 import 'package:provider/provider.dart';
 
-/*
-    return FutureBuilder<ThemeSettings>(
-      future: Provider.of<Database>(context, listen: false).getTheme(),
-      builder: (BuildContext context, AsyncSnapshot<ThemeSettings> snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.active:
-            return const CircularProgressIndicator();
-          case ConnectionState.waiting:
-            return const CircularProgressIndicator();
-          case ConnectionState.done:
-            if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            }
-            _darkMode = snapshot.data != null ? snapshot.data!.darkMode : false;
-            _accentColor = snapshot.data != null ? snapshot.data!.accentColor : '0xFFE53935';
-            // Add screen below
-          case ConnectionState.none:
-            return const CircularProgressIndicator();
-        }
-      },
-    );
- */
-
 class Settings extends StatefulWidget {
 
   const Settings({Key? key, required this.context}) : super(key: key);
 
   final BuildContext context;
+
 
   @override
   State<Settings> createState() => _SettingsState();
@@ -72,7 +50,6 @@ class _SettingsState extends State<Settings> {
     try {
       await Provider.of<Database>(widget.context, listen: false).deleteData();
       await Provider.of<AuthBase>(widget.context, listen: false).deleteAccount();
-      Navigator.of(widget.context).pop();
     } catch (e) {
       showExceptionAlertDialog(
         widget.context,

@@ -108,6 +108,11 @@ class _SignInPageState extends State<SignInPage> with
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(width: MediaQuery.of(context).size.width, height: 50),
+                const Text(
+                  'Sign In',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.black, fontSize: 32.0,),
+                ),
                 const SizedBox(height: 100),
                 TextField(
                   style: const TextStyle(fontSize: 14),

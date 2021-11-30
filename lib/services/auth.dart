@@ -52,7 +52,7 @@ class Auth implements AuthBase {
 
   @override
   Future<void> deleteAccount() async {
-    var credential = EmailAuthProvider.credential(
+    AuthCredential credential = EmailAuthProvider.credential(
       email: _email,
       password: _password,
     );

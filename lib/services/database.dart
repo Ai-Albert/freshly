@@ -81,7 +81,7 @@ class FirestoreDatabase implements Database {
     }
 
     // Deleting theme
-    items = FirebaseFirestore.instance.collection(APIPath.theme(uid));
+    items = FirebaseFirestore.instance.collection('users/$uid/theme');
     snapshotsItems = await items.get();
     for (var item in snapshotsItems.docs) {
       await deleteFoodItem(item.id);

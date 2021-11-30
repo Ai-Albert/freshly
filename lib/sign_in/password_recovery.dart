@@ -44,7 +44,7 @@ class _PasswordRecoveryState extends State<PasswordRecovery> with
                   textAlign: TextAlign.center,
                   style: TextStyle(color: Colors.black, fontSize: 32.0,),
                 ),
-                const SizedBox(height: 50.0),
+                const SizedBox(height: 100.0),
                 TextField(
                   decoration: InputDecoration(
                     labelText: 'Email',
