@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:freshly/services/database.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class ColorSelector extends StatefulWidget {
@@ -46,11 +45,20 @@ class _ColorSelectorState extends State<ColorSelector> {
 
   @override
   Widget build(BuildContext context) {
+    TextStyle darkStyle = const TextStyle(color: Colors.white);
+    TextStyle lightStyle = const TextStyle(color: Colors.black);
+    if (widget.darkMode[0]) {
+      return _buildDropdownButton(darkStyle);
+    }
+    return _buildDropdownButton(lightStyle);
+  }
+
+  Widget _buildDropdownButton(TextStyle style) {
     return DropdownButton<String>(
-      iconEnabledColor: Colors.black,
-      dropdownColor: Colors.white,
+      iconEnabledColor: widget.darkMode[0] ? Colors.white : Colors.black,
+      dropdownColor: widget.darkMode[0] ? Colors.grey[900] : Colors.white,
       value: currColor!,
-      style: GoogleFonts.montserrat(textStyle: const TextStyle(color: Colors.black)),
+      style: style,
       items: <String>[
         'Red',
         'Orange',
@@ -66,7 +74,6 @@ class _ColorSelectorState extends State<ColorSelector> {
           value: value,
           child: Text(
             value,
-            style: GoogleFonts.montserrat(),
           ),
         );
       }).toList(),

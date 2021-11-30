@@ -16,13 +16,14 @@ class _DarkModeSwitchState extends State<DarkModeSwitch> {
   @override
   Widget build(BuildContext context) {
     return Switch(
-        value: widget.darkMode[0],
-        onChanged: (bool value) {
-          setState(() {
-            widget.darkMode[0] = value;
-            Provider.of<Database>(context, listen: false).setTheme(value, widget.color[0]);
-          });
-        }
+      activeColor: Color(int.parse(widget.color[0])),
+      value: widget.darkMode[0],
+      onChanged: (bool value) {
+        setState(() {
+          widget.darkMode[0] = value;
+          Provider.of<Database>(context, listen: false).setTheme(value, widget.color[0]);
+        });
+      }
     );
   }
 }

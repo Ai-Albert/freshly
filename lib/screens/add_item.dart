@@ -11,18 +11,27 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 class AddItem extends StatefulWidget {
 
   // The FoodItem is passed into show() if editing an existing item, otherwise item is null
-  const AddItem({Key? key, required this.database, this.item}) : super(key: key);
+  const AddItem({Key? key, required this.database, this.item, required this.darkMode, required this.accentColor}) : super(key: key);
 
   final Database database;
   final FoodItem? item;
+  final bool darkMode;
+  final String accentColor;
 
   /* We use this function to go to this page because we need to do MaterialPageRoute
    * for onPressed since onPressed requires a function and AddJobPage is a Widget
    */
-  static Future<void> show(BuildContext context, {required Database database, FoodItem? item}) async {
+  static Future<void> show(
+      BuildContext context, {
+        required Database database,
+        FoodItem? item,
+        required bool darkMode,
+        required String accentColor,
+      }
+  ) async {
     showBarModalBottomSheet(
       context: context,
-      builder: (context) => AddItem(database: database, item: item),
+      builder: (context) => AddItem(database: database, item: item, darkMode: darkMode, accentColor: accentColor),
       elevation: 100,
       barrierColor: Colors.black45,
     );
@@ -93,7 +102,7 @@ class _AddTaskState extends State<AddItem> {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: widget.darkMode ? Colors.black : Colors.white,
         body: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.all(16.0),
@@ -118,16 +127,63 @@ class _AddTaskState extends State<AddItem> {
   }
 
   Widget _buildName() {
+    if (widget.darkMode) {
+      return TextField(
+        decoration: InputDecoration(
+          labelText: 'Item Name',
+          labelStyle: const TextStyle(color: Colors.white),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: widget.darkMode ? Colors.white : Colors.black),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: widget.darkMode ? Colors.white : Colors.black),
+            borderRadius: BorderRadius.circular(15),
+          ),
+        ),
+        cursorColor: widget.darkMode ? Colors.white : Colors.black,
+        controller: TextEditingController(text: _itemName),
+        keyboardType: TextInputType.text,
+        onChanged: (name) => _itemName = name,
+        style: const TextStyle(color: Colors.white),
+      );
+    }
     return TextField(
       decoration: InputDecoration(
         labelText: 'Item Name',
+        labelStyle: const TextStyle(color: Colors.black),
         enabledBorder: OutlineInputBorder(borderSide: const BorderSide(color: Colors.black), borderRadius: BorderRadius.circular(15)),
         focusedBorder: OutlineInputBorder(borderSide: const BorderSide(color: Colors.black), borderRadius: BorderRadius.circular(15)),
       ),
-      cursorColor: Colors.black,
+      cursorColor: widget.darkMode ? Colors.white : Colors.black,
       controller: TextEditingController(text: _itemName),
       keyboardType: TextInputType.text,
       onChanged: (name) => _itemName = name,
+    );
+  }
+
+  Widget _buildCategory() {
+    if (widget.darkMode) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Text(
+            'Category:',
+            style: TextStyle(color: Colors.white),
+          ),
+          CategorySelector(category: _category, darkMode: widget.darkMode),
+        ],
+      );
+    }
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        const Text(
+          'Category:',
+          style: TextStyle(color: Colors.black),
+        ),
+        CategorySelector(category: _category, darkMode: widget.darkMode),
+      ],
     );
   }
 
@@ -143,27 +199,14 @@ class _AddTaskState extends State<AddItem> {
         });
       },
       leftMargin: 0,
-      monthColor: Colors.black,
-      dayColor: Colors.teal[200],
-      dayNameColor: const Color(0xFF333A47),
+      monthColor: widget.darkMode ? Colors.white : Colors.black,
+      dayColor: Colors.grey[400],
+      dayNameColor: Colors.white,
       activeDayColor: Colors.white,
       activeBackgroundDayColor: Colors.red,
       dotsColor: const Color(0xFF333A47),
       selectableDayPredicate: (date) => date.day != 23,
       locale: 'en',
-    );
-  }
-
-  Widget _buildCategory() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        const Text(
-          'Category:',
-          style: TextStyle(color: Colors.black),
-        ),
-        CategorySelector(category: _category),
-      ],
     );
   }
 

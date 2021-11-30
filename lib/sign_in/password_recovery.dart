@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:freshly/custom_widgets/show_alert_dialog.dart';
 import 'package:freshly/sign_in/validators.dart';
 
@@ -40,22 +39,16 @@ class _PasswordRecoveryState extends State<PasswordRecovery> with
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(width: MediaQuery.of(context).size.width),
-                Text(
+                const Text(
                   'Password Reset',
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.comfortaa(
-                    textStyle: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 32.0,
-                    ),
-                  ),
+                  style: TextStyle(color: Colors.black, fontSize: 32.0,),
                 ),
                 const SizedBox(height: 50.0),
                 TextField(
-                  style: GoogleFonts.montserrat(),
                   decoration: InputDecoration(
                     labelText: 'Email',
-                    labelStyle: GoogleFonts.montserrat(textStyle: const TextStyle(color: Colors.black)),
+                    labelStyle: const TextStyle(color: Colors.black),
                     enabledBorder: OutlineInputBorder(borderSide: const BorderSide(color: Colors.black), borderRadius: BorderRadius.circular(15)),
                     focusedBorder: OutlineInputBorder(borderSide: const BorderSide(color: Colors.black), borderRadius: BorderRadius.circular(15)),
                   ),
@@ -86,7 +79,6 @@ class _PasswordRecoveryState extends State<PasswordRecovery> with
       selectedTextColor: Colors.white,
       transitionType: TransitionType.LEFT_TO_RIGHT,
       selectedBackgroundColor: Colors.red,
-      //textStyle: submitTextStyle,
       backgroundColor: Colors.black,
       borderColor: Colors.white,
       borderRadius: 15,

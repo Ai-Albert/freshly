@@ -32,7 +32,7 @@ class ListItemsBuilder<T> extends StatelessWidget {
         message: 'Can\'t load items right now',
       );
     }
-    return const Center(child: CircularProgressIndicator());
+    return Container();
   }
 
   Widget _buildList(List<T> items) {

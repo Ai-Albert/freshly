@@ -58,7 +58,7 @@ class FirestoreDatabase implements Database {
 
   @override
   Future<ThemeSettings> getTheme() async {
-    var document = FirebaseFirestore.instance.doc('users/$uid/theme/theme');
+    var document = FirebaseFirestore.instance.doc(APIPath.theme(uid));
     var snapshot = await document.get();
     return ThemeSettings.fromMap(snapshot.data());
   }

@@ -5,30 +5,42 @@ import 'package:freshly/services/database.dart';
 import 'package:provider/provider.dart';
 
 class FoodItemListTile extends StatefulWidget {
-  const FoodItemListTile({Key? key, required this.item, required this.onTap}) : super(key: key);
+  const FoodItemListTile({
+    Key? key,
+    required this.item,
+    required this.onTap,
+    required this.darkMode,
+    required this.accentColor,
+  }) : super(key: key);
 
   final FoodItem item;
   final VoidCallback onTap;
+  final bool darkMode;
+  final String accentColor;
 
   @override
   State<FoodItemListTile> createState() => _FoodItemListTileState();
 }
 
 class _FoodItemListTileState extends State<FoodItemListTile> {
-  List<AnimatedIconItem> notFavorited = const [
+
+  late final bool darkMode = widget.darkMode;
+  late final String accentColor = widget.accentColor;
+
+  late List<AnimatedIconItem> notFavorited = [
     AnimatedIconItem(
-      icon: Icon(Icons.favorite_border, color: Colors.black),
+      icon: Icon(Icons.favorite_border, color: darkMode ? Colors.white : Colors.black),
     ),
     AnimatedIconItem(
-      icon: Icon(Icons.favorite, color: Colors.red),
+      icon: Icon(Icons.favorite, color: Color(int.parse(accentColor))),
     ),
   ];
-  List<AnimatedIconItem> favorited = const [
+  late List<AnimatedIconItem> favorited = [
     AnimatedIconItem(
-      icon: Icon(Icons.favorite, color: Colors.red),
+      icon: Icon(Icons.favorite, color: Color(int.parse(accentColor))),
     ),
     AnimatedIconItem(
-      icon: Icon(Icons.favorite_border, color: Colors.black,),
+      icon: Icon(Icons.favorite_border, color: darkMode ? Colors.white : Colors.black),
     ),
   ];
   late List<AnimatedIconItem> currAnimation;
@@ -48,8 +60,9 @@ class _FoodItemListTileState extends State<FoodItemListTile> {
   Widget build(BuildContext context) {
     DateTime threshold = DateTime.now().subtract(const Duration(days: 1));
     bool expired = threshold.compareTo(widget.item.expiryDate) > 0;
+
     return Card(
-      color: expired ? Colors.red : Colors.white,
+      color: expired ? Colors.red : (darkMode ? Colors.grey[900] : Colors.white),
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20.0))),
       margin: const EdgeInsets.all(6.0),
       child: InkWell(
@@ -66,8 +79,8 @@ class _FoodItemListTileState extends State<FoodItemListTile> {
   }
 
   Widget _buildTile(BuildContext context) {
-    const TextStyle style = TextStyle(
-      color: Colors.black,
+    TextStyle style = TextStyle(
+      color: darkMode ? Colors.white : Colors.black,
       fontSize: 16.0,
     );
 

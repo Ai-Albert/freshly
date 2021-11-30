@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class CategorySelector extends StatefulWidget {
-  const CategorySelector({Key? key, required this.category}) : super(key: key);
+
+  const CategorySelector({Key? key, required this.category, required this.darkMode}) : super(key: key);
+
   final List<String> category;
+  final bool darkMode;
 
   @override
   _CategorySelectorState createState() => _CategorySelectorState();
@@ -32,17 +34,39 @@ class _CategorySelectorState extends State<CategorySelector> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.darkMode) {
+      return DropdownButton<String>(
+        iconEnabledColor: widget.darkMode ? Colors.white : Colors.black,
+        dropdownColor: widget.darkMode ? Colors.black : Colors.white,
+        value: currCategory!,
+        style: const TextStyle(color: Colors.white),
+        items: categories.map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(
+              value,
+              style: const TextStyle(color: Colors.white),
+            ),
+          );
+        }).toList(),
+        onChanged: (String? value) {
+          setState(() {
+            currCategory = value;
+            widget.category[0] = value!;
+          });
+        },
+      );
+    }
     return DropdownButton<String>(
-      iconEnabledColor: Colors.black,
-      dropdownColor: Colors.white,
+      iconEnabledColor: widget.darkMode ? Colors.white : Colors.black,
+      dropdownColor: widget.darkMode ? Colors.black : Colors.white,
       value: currCategory!,
-      style: GoogleFonts.montserrat(textStyle: const TextStyle(color: Colors.black)),
+      style: const TextStyle(color: Colors.black),
       items: categories.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
           child: Text(
             value,
-            style: GoogleFonts.montserrat(),
           ),
         );
       }).toList(),

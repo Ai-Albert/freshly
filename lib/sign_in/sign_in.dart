@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:freshly/custom_widgets/show_exception_alert_dialog.dart';
 import 'package:freshly/services/auth.dart';
 import 'package:freshly/sign_in/validators.dart';
@@ -111,10 +110,9 @@ class _SignInPageState extends State<SignInPage> with
                 SizedBox(width: MediaQuery.of(context).size.width, height: 50),
                 const SizedBox(height: 50),
                 TextField(
-                  style: GoogleFonts.montserrat(textStyle: const TextStyle(fontSize: 14)),
+                  style: const TextStyle(fontSize: 14),
                   decoration: InputDecoration(
                     labelText: 'Email',
-                    labelStyle: GoogleFonts.montserrat(),
                     errorText: showEmailError ? 'Email can\'t be empty' : null,
                     errorStyle: const TextStyle(color: Colors.red),
                     enabledBorder: OutlineInputBorder(borderSide: const BorderSide(color: Colors.black), borderRadius: BorderRadius.circular(15)),
@@ -129,10 +127,9 @@ class _SignInPageState extends State<SignInPage> with
                 ),
                 const SizedBox(height: 15.0),
                 TextField(
-                  style: GoogleFonts.montserrat(textStyle: const TextStyle(fontSize: 14)),
+                  style: const TextStyle(fontSize: 14),
                   decoration: InputDecoration(
                     labelText: 'Password',
-                    labelStyle: GoogleFonts.montserrat(),
                     errorText: showPasswordError ? 'Password can\'t be empty' : null,
                     errorStyle: const TextStyle(color: Colors.red),
                     enabledBorder: OutlineInputBorder(borderSide: const BorderSide(color: Colors.black), borderRadius: BorderRadius.circular(15)),

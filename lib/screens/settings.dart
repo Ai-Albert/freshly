@@ -9,6 +9,29 @@ import 'package:freshly/services/auth.dart';
 import 'package:freshly/services/database.dart';
 import 'package:provider/provider.dart';
 
+/*
+    return FutureBuilder<ThemeSettings>(
+      future: Provider.of<Database>(context, listen: false).getTheme(),
+      builder: (BuildContext context, AsyncSnapshot<ThemeSettings> snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.active:
+            return const CircularProgressIndicator();
+          case ConnectionState.waiting:
+            return const CircularProgressIndicator();
+          case ConnectionState.done:
+            if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            }
+            _darkMode = snapshot.data != null ? snapshot.data!.darkMode : false;
+            _accentColor = snapshot.data != null ? snapshot.data!.accentColor : '0xFFE53935';
+            // Add screen below
+          case ConnectionState.none:
+            return const CircularProgressIndicator();
+        }
+      },
+    );
+ */
+
 class Settings extends StatefulWidget {
 
   const Settings({Key? key, required this.context}) : super(key: key);
@@ -21,22 +44,8 @@ class Settings extends StatefulWidget {
 
 class _SettingsState extends State<Settings> {
 
-  late List<bool> _darkMode = [false];
-  late List<String> _accentColor = [''];
-
-  @override
-  void initState() {
-    super.initState();
-
-    // Database database = Provider.of<Database>(context, listen: false);
-    // ThemeSettings theme = ThemeSettings.fromMap(null);
-    // database.getTheme().then((value) {
-    //   theme = value;
-    // });
-
-    // _darkMode = theme.darkMode;
-    // _accentColor[0] = theme.accentColor;
-  }
+  late final List<bool> _darkMode = [false];
+  late final List<String> _accentColor = [''];
 
   Future _signOut() async {
     try {
@@ -93,49 +102,64 @@ class _SettingsState extends State<Settings> {
       builder: (BuildContext context, AsyncSnapshot<ThemeSettings> snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.active:
-            return const CircularProgressIndicator();
+            return Container(color: Colors.transparent);
           case ConnectionState.waiting:
-            return const CircularProgressIndicator();
+            return Container(color: Colors.transparent);
           case ConnectionState.done:
             if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             }
             _darkMode[0] = snapshot.data != null ? snapshot.data!.darkMode : false;
             _accentColor[0] = snapshot.data != null ? snapshot.data!.accentColor : '0xFFE53935';
-            return Padding(
-              padding: EdgeInsets.only(
-                top: AppBar().preferredSize.height + MediaQuery.of(context).padding.top + 24,
-                bottom: 62 + MediaQuery.of(context).padding.bottom,
-                left: 16.0,
-                right: 16.0,
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 5.0),
-                  _darkModeSwitch(),
-                  _accentColorPicker(),
-                  const SizedBox(height: 150.0),
-                  _logoutButton(),
-                  _deleteAccountButton(),
-                ],
+            return Container(
+              color: _darkMode[0] ? Colors.black : Colors.white,
+              child: Padding(
+                padding: EdgeInsets.only(
+                  top: AppBar().preferredSize.height + MediaQuery.of(context).padding.top + 24,
+                  bottom: 62 + MediaQuery.of(context).padding.bottom,
+                  left: 16.0,
+                  right: 16.0,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 5.0),
+                    _darkModeSwitch(),
+                    _accentColorPicker(),
+                    const SizedBox(height: 150.0),
+                    _logoutButton(),
+                    _deleteAccountButton(),
+                  ],
+                ),
               ),
             );
-            //.... here route to your screen or set it how you want
           case ConnectionState.none:
-            return const CircularProgressIndicator();
+            return Container(color: Colors.transparent);
         }
       },
     );
   }
 
   Widget _darkModeSwitch() {
+    if (_darkMode[0]) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Text(
+            'Dark Mode:',
+            style: TextStyle(color: Colors.white),
+          ),
+          DarkModeSwitch(darkMode: _darkMode, color: _accentColor),
+        ],
+      );
+    }
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         const Text(
-          'Dark Mode:'
+          'Dark Mode:',
+          style: TextStyle(color: Colors.black),
         ),
         DarkModeSwitch(darkMode: _darkMode, color: _accentColor),
       ],
@@ -143,6 +167,18 @@ class _SettingsState extends State<Settings> {
   }
 
   Widget _accentColorPicker() {
+    if (_darkMode[0]) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Text(
+            'Accent Color:',
+            style: TextStyle(color: Colors.white),
+          ),
+          ColorSelector(darkMode: _darkMode, color: _accentColor),
+        ],
+      );
+    }
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -163,7 +199,7 @@ class _SettingsState extends State<Settings> {
       isReverse: true,
       selectedTextColor: Colors.white,
       transitionType: TransitionType.LEFT_TO_RIGHT,
-      selectedBackgroundColor: Colors.red,
+      selectedBackgroundColor: Color(int.parse(_accentColor[0])),
       backgroundColor: Colors.black,
       borderColor: Colors.white,
       borderRadius: 15,
