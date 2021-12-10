@@ -56,7 +56,7 @@ class _ColorSelectorState extends State<ColorSelector> {
   Widget _buildDropdownButton(TextStyle style) {
     return DropdownButton<String>(
       iconEnabledColor: widget.darkMode[0] ? Colors.white : Colors.black,
-      dropdownColor: widget.darkMode[0] ? Colors.grey[900] : Colors.white,
+      dropdownColor: widget.darkMode[0] ? Colors.black : Colors.white,
       value: currColor!,
       style: style,
       items: <String>[
